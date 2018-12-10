@@ -8,7 +8,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${DIR_TOOT_SRCS}/bin)
 
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
-add_executable(tracker ${DIR_TOOT_SRCS})
+include_directories("include/")
+add_executable(tracker main.c)
 link_directories(${OpenCV_LIBRARY_DIRS})
 target_link_libraries(tracker ${OpenCV_LIBS})
 
