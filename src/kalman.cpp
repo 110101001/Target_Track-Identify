@@ -47,7 +47,16 @@ void target::KalmanInit(int x,int y){
 }
 
 
-void target::KalmanPredict(int x, int y){
+Point target::KalmanPredict(){
+    prd=KF.predict();
+    return Point(prd.at<float>(1,1),prd.at<float>(2,1));
+}
+
+Point target::Update_pos(int x,int y){
     meas.at<float>(0,0)=x;
     meas.at<float>(0,0)=y;
+    KF.correct(meas);
+    _pos.x=KF.state.at<float>(0,0);
+    _pos.y=KF.state.at<float>(1,0);
+    return _pos;
 }

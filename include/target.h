@@ -18,18 +18,21 @@
 #include "opencv2/core.hpp"
 
 using namespace cv;
+using namespace std;
 
 class target{
     public:
         target();
         target(int x, int y);
 
-        void KalmanInit(int x,int y);
-        void KalmanPredict(int x,int y);
+        Point KalmanPredict();
+        Point Update_pos(int x,int y);
 
     private:
+        void KalmanInit(int x,int y);
+
         Point _Pos;
-        KalmanFilter KF(4,2,0);
-        Mat_<float> meas(2,1);
-        Mat_<float> prd(4,1);
+        KalmanFilter KF;
+        Mat_<float> meas;
+        Mat_<float> prd;
 };
