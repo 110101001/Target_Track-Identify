@@ -1,3 +1,0 @@
-/home/wupeicong/github/track/build/CMakeFiles/rebuild_cache.dir
-/home/wupeicong/github/track/build/CMakeFiles/tracker.dir
-/home/wupeicong/github/track/build/CMakeFiles/edit_cache.dir
