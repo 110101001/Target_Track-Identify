@@ -11,6 +11,8 @@
 # Description: define class target 
 #
 =============================================================================*/
+#ifndef _TARGET_H_
+#define _TARGET_H_
 #include <stdlib.h>
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui.hpp"
@@ -36,3 +38,5 @@ class target{
         Mat_<float> meas;
         Mat_<float> prd;
 };
+
+#endif

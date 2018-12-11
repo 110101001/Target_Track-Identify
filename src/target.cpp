@@ -15,18 +15,20 @@
 #include "target.h"
 
 target::target(){
-    _pos=Point(0,0);
+    _Pos=Point(0,0);
     meas=Mat_<float>(2,1);
     prd=Mat_<float>(4,1);
     KF=KalmanFilter(4,2,0);
+
     KalmanInit(0,0);
 }
 
 target::target(int x,int y){
-    _pos=Point(0,0);
+    _Pos=Point(0,0);
     meas=Mat_<float>(2,1);
     prd=Mat_<float>(4,1);
     KF=KalmanFilter(4,2,0);
+
     KalmanInit(x,y);
 }
 

@@ -4,9 +4,9 @@
 #
 # Create Time: 2018-12-10 10:23
 #
-# Last modified: 2018-12-10 10:23
+# Last modified:	2018-12-10 16:31
 #
-# Filename: kalman.cpp
+# Filename:	kalman.cpp
 #
 # Description: Use kalman to predict targets' movement. 
 #
@@ -55,8 +55,8 @@ Point target::KalmanPredict(){
 Point target::Update_pos(int x,int y){
     meas.at<float>(0,0)=x;
     meas.at<float>(0,0)=y;
-    KF.correct(meas);
-    _pos.x=KF.state.at<float>(0,0);
-    _pos.y=KF.state.at<float>(1,0);
-    return _pos;
+    Mat state=KF.correct(meas);
+    _Pos.x=state.at<float>(0,0);
+    _Pos.y=state.at<float>(1,0);
+    return _Pos;
 }
