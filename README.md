@@ -12,11 +12,11 @@ This program's function is mult-target track&identify. It's a course design of C
 
 This Program use following methods:
 
-    HarrisCorner
+    SURF
 
     KalmanFilter
 
-    Interframe differentiation
+    Background differentiation
 
 
 
