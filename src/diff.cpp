@@ -51,5 +51,5 @@ Mat Get_mask(Mat present){
     erode(mask,mask,ele);
     imshow("splt",mask);
 
-    return mask;
+    return ~mask;
 }

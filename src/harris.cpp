@@ -4,13 +4,18 @@
 #
 # Create Time: 2018-12-10 16:10
 #
-# Last modified:2018-12-11 10:54
+# Last modified: 2018-12-17 20:19
 #
 # Filename:	harris.cpp
 #
-# Description: Harris corner dectecter 
+# Description: Harris corner dectecter(No longer use it) 
 #
 =============================================================================*/
+/*
+ *
+ * WARNING: THIS FILE HAS BEEN ABANDONED!
+ *
+ */
 #include "target.h"
 
 #define BLK_SIZE 2

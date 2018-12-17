@@ -4,15 +4,17 @@
 #
 # Create Time: 2018-12-10 10:43
 #
-# Last modified: 2018-12-10 10:43
+# Last modified: 2018-12-17 20:04
 #
-# Filename: target.cpp
+# Filename:	target.cpp
 #
-# Description: target's member function 
+# Description: target's function 
 #
 =============================================================================*/
 
 #include "target.h"
+
+vector<target> Targets;
 
 target::target(){
     _Pos=Point(0,0);
@@ -32,4 +34,16 @@ target::target(int x,int y){
     KalmanInit(x,y);
 }
 
+void target::SetKeyPoint(vector<KeyPoint> keypoints,Point p1,Point p2){
+    for(vector<KeyPoint>::iterator iter=keypoints.begin();iter!=keypoints.end();iter++){
+        if(IN_RANGE(iter->pt.x,p1.x,p2.x)&&IN_RANGE(iter->pt.y,p1.y,p2.y)){
+            _keypoints.push_back(*iter);
+        }
+    }
+}
 
+target *new_target(){
+    target nt;
+    Targets.push_back(nt);
+    return &Targets.back();
+}

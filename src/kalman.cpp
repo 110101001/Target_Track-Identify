@@ -4,7 +4,7 @@
 #
 # Create Time: 2018-12-10 10:23
 #
-# Last modified:	2018-12-10 16:31
+# Last modified: 2018-12-17 20:08
 #
 # Filename:	kalman.cpp
 #
@@ -15,7 +15,6 @@
 #include "math.h"
 #include <iostream>
 
-#define IN_RANGE(x,ul,dl) ((x)<=(ul)&&(x)>=(dl))
 
 #define ABS(x) ((x)>0?(x):-(x))
 

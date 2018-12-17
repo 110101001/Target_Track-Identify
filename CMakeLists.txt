@@ -7,7 +7,7 @@ SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
 #SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -w -g -ggdb")
 #SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED xfeatures2d)
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories("include/")
 ADD_SUBDIRECTORY(src)
