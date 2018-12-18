@@ -35,8 +35,8 @@ class target{
 
         Point KalmanPredict();
         Point Update_pos(int x,int y);
-        void setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2);
-        std::vector<DMatch> match(std::vector<KeyPoint> kp,Mat desc);
+        int setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2);
+        Mat match(std::vector<KeyPoint> kp,Mat desc);
         void print();
     public:
         vector<KeyPoint> _keypoints;
@@ -54,6 +54,7 @@ class target{
 
 
 target *new_target(int x,int y);
+void pop_target();
 void target_track(vector<KeyPoint> kp,Mat desc,Mat img);
 
 #endif

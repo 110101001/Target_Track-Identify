@@ -40,9 +40,8 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
         pressed=0;
         select_end=Point(x,y);
         Point center=Point((select_start.x+select_end.x)/2,(select_start.y+select_end.y)/2);
-        cout<<center.x<<center.y<<endl;
         target *nt=new_target(center.x,center.y);
-        nt->setKeyPoint(feature_points,desc,select_start,select_end);
+        if(!(nt->setKeyPoint(feature_points,desc,select_start,select_end))) pop_target();
         select_end=Point(0,0);
         select_start=Point(0,0);
     }

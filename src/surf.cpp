@@ -26,7 +26,7 @@ std::vector<KeyPoint> surf_detect(Mat src,Mat mask,Mat &desc,int hessian){
     return keypoints;
 }
 
-void target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
+int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
     for(vector<KeyPoint>::iterator iter=keypoints.begin();iter!=keypoints.end();iter++){
         if(IN_RANGE(iter->pt.x,p1.x,p2.x)&&IN_RANGE(iter->pt.y,p1.y,p2.y)){
             _keypoints.push_back(*iter);
@@ -40,11 +40,43 @@ void target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
         }
     }
     print();
+    return _keypoints.size();
 }
 
-std::vector<DMatch> target::match(std::vector<KeyPoint> kp,Mat desc){
+Mat target::match(std::vector<KeyPoint> kp,Mat desc){
     Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create(DescriptorMatcher::BRUTEFORCE);
     std::vector< DMatch > matches;
     matcher->match( _desc, desc, matches  );
-    return matches;
+    int match_num =  matches.size();
+    Mat po(match_num, 2, CV_32F);
+    Mat ps(match_num, 2, CV_32F);
+    Mat good_po;
+    Mat good_ps;
+    Point2f pt;
+    for (int i=0; i<match_num; i++) {
+        pt = _keypoints[matches[i].queryIdx].pt;
+        po.at<float>(i, 0) = pt.x;
+        po.at<float>(i, 1) = pt.y;
+
+        pt = kp[matches[i].trainIdx].pt;
+        ps.at<float>(i, 0) = pt.x;
+        ps.at<float>(i, 1) = pt.y;
+    }
+    vector<bool> RANSAC_mask;
+    findFundamentalMat(po, ps, RANSAC_mask, FM_RANSAC);    
+
+    for (int i=0; i<match_num; i++) {
+        if(RANSAC_mask[i]!=0){
+            if(good_po.empty()){
+                good_po=po.row(i).clone();
+                good_ps=ps.row(i).clone();
+            }
+            else{
+                good_po.push_back(po.row(i));
+                good_ps.push_back(ps.row(i));
+            }
+        }
+    }
+    Mat homo=findHomography(po,ps);
+    return homo;
 }

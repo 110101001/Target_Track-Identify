@@ -39,6 +39,9 @@ target *new_target(int x,int y){
     Targets.push_back(nt);
     return &Targets.back();
 }
+void pop_target(){
+    Targets.pop_back();
+}
 
 void target::print(){
     cout<<"Target descprition:"<<endl;
@@ -50,7 +53,7 @@ void target::print(){
 void target_track(vector<KeyPoint> kp,Mat desc,Mat img){ 
     for(vector<target>::iterator iter=Targets.begin();iter!=Targets.end();iter++){
         std::vector< DMatch > matches;
-        matches=iter->match(kp,desc);
-
+        Mat homo=iter->match(kp,desc);
+        cout<<homo<<endl;
     }
 }
