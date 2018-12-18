@@ -4,7 +4,7 @@
 #
 # Create Time : 2018-12-17 14:25
 #
-# Last modified:2018-12-17 16:19
+# Last modified: 2018-12-18 09:17
 #
 # Filename:	surf.h
 #
@@ -20,6 +20,6 @@
 #include<opencv2/features2d.hpp>
 #include"opencv2/xfeatures2d.hpp"
 
-std::vector<KeyPoint> surf_detect(Mat src,Mat mask,int hessian);
+std::vector<KeyPoint> surf_detect(Mat src,Mat mask,Mat &desc,int hessian);
 
 #endif

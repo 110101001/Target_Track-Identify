@@ -4,7 +4,7 @@
 #
 # Create Time: 2018-12-10 10:43
 #
-# Last modified: 2018-12-17 19:37
+# Last modified: 2018-12-18 09:28
 #
 # Filename:	target.h
 #
@@ -35,20 +35,25 @@ class target{
 
         Point KalmanPredict();
         Point Update_pos(int x,int y);
-        void SetKeyPoint(vector<KeyPoint> keypoints,Point p1,Point p2);
+        void setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2);
+        std::vector<DMatch> match(std::vector<KeyPoint> kp,Mat desc);
+        void print();
+    public:
+        vector<KeyPoint> _keypoints;
+        Point _Pos;
 
     private:
         void KalmanInit(int x,int y);
 
-        Point _Pos;
         KalmanFilter KF;
         Mat_<float> meas;
         Mat_<float> prd;
 
-        vector<KeyPoint> _keypoints;
+        Mat _desc;
 };
 
 
-target *new_target();
+target *new_target(int x,int y);
+void target_track(vector<KeyPoint> kp,Mat desc,Mat img);
 
 #endif

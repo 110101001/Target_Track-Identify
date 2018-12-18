@@ -24,12 +24,14 @@ Point select_start;
 Point select_end;
 
 vector<KeyPoint> feature_points;
+Mat desc;
 
 void Mouse_handler(int event,int x,int y,int flags,void *ustc){
     static int  pressed=0;
     if(event==EVENT_LBUTTONDOWN){
         pressed=1;
         select_start=Point(x,y);
+        select_end=Point(x,y);
     }
     else if(event==EVENT_MOUSEMOVE && (flags & EVENT_FLAG_LBUTTON)){
         select_end=Point(x,y);
@@ -37,12 +39,12 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
     else if((event==EVENT_LBUTTONUP)&&(pressed==1)){
         pressed=0;
         select_end=Point(x,y);
-        target *nt=new_target();
-        nt->SetKeyPoint(feature_points,select_start,select_end);
-
+        Point center=Point((select_start.x+select_end.x)/2,(select_start.y+select_end.y)/2);
+        cout<<center.x<<center.y<<endl;
+        target *nt=new_target(center.x,center.y);
+        nt->setKeyPoint(feature_points,desc,select_start,select_end);
         select_end=Point(0,0);
         select_start=Point(0,0);
-        cout<<select_start.x<<" "<<select_start.y<<" to "<<x<<" "<<y<<endl;
     }
 }
 
@@ -51,8 +53,8 @@ int main(int argc, char **argv){
     Mat mask,masked_frame;
     Mat corner;
     char c=0;
-    cout << "Opening camera..." << endl;
     VideoCapture capture(0); // open the first camera
+    cout << "Opening camera..." << endl;
     capture.set(CAP_PROP_FRAME_WIDTH,640);
     capture.set(CAP_PROP_FRAME_HEIGHT,480);
     if (!capture.isOpened())
@@ -76,9 +78,10 @@ int main(int argc, char **argv){
 
         //corner=find_corner(gray_frame,mask);
 
-        feature_points=surf_detect(gray_frame,mask,100);
+        feature_points=surf_detect(gray_frame,mask,desc,300);
+        target_track(feature_points,desc,frame);
         drawKeypoints( frame, feature_points, display );
-        rectangle(display,select_start,select_end,Scalar(255,0,0),2);
+        rectangle(display,select_start,select_end,Scalar(0,255,0),2);
         imshow("frame",display);
         c=waitKey(30);
     }

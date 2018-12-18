@@ -26,7 +26,7 @@ target::target(){
 }
 
 target::target(int x,int y){
-    _Pos=Point(0,0);
+    _Pos=Point(x,y);
     meas=Mat_<float>(2,1);
     prd=Mat_<float>(4,1);
     KF=KalmanFilter(4,2,0);
@@ -34,16 +34,23 @@ target::target(int x,int y){
     KalmanInit(x,y);
 }
 
-void target::SetKeyPoint(vector<KeyPoint> keypoints,Point p1,Point p2){
-    for(vector<KeyPoint>::iterator iter=keypoints.begin();iter!=keypoints.end();iter++){
-        if(IN_RANGE(iter->pt.x,p1.x,p2.x)&&IN_RANGE(iter->pt.y,p1.y,p2.y)){
-            _keypoints.push_back(*iter);
-        }
-    }
-}
-
-target *new_target(){
-    target nt;
+target *new_target(int x,int y){
+    target nt(x,y);
     Targets.push_back(nt);
     return &Targets.back();
+}
+
+void target::print(){
+    cout<<"Target descprition:"<<endl;
+    cout<<"Position:"<<_Pos.x<<" "<<_Pos.y<<endl;
+    cout<<"This target has "<<_keypoints.size()<<" points"<<endl;
+}
+
+
+void target_track(vector<KeyPoint> kp,Mat desc,Mat img){ 
+    for(vector<target>::iterator iter=Targets.begin();iter!=Targets.end();iter++){
+        std::vector< DMatch > matches;
+        matches=iter->match(kp,desc);
+
+    }
 }
