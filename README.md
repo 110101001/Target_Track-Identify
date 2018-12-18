@@ -12,7 +12,7 @@ This program's function is mult-target track&identify. It's a course design of C
 
 This Program use following methods:
 
-    SURF
+    SURF(harris no longer used)
 
     KalmanFilter
 
@@ -22,7 +22,7 @@ This Program use following methods:
 
 COMPILE:
 
-    To compile, you need a Cmake(vision 3.5 or higher), g++(vision 7 or higher) and OpenCV(3.4.4)
+    To compile, you need a Cmake(vision 3.5.0 or higher), g++(vision 7 or higher) and OpenCV(4.0.0, including opencv contrib, more specifically, the xfeatures2d module)
 
     Create a directory for build:
 
@@ -38,3 +38,4 @@ COMPILE:
 
         make
 
+    A executable file tracker should be generated.
