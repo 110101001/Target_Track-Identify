@@ -43,17 +43,18 @@ void target::KalmanInit(int x,int y){
     setIdentity(KF.measurementMatrix, Scalar::all(1)); //adjust this for faster convergence - but higher noise
     setIdentity(KF.measurementNoiseCov, Scalar::all(MEAS_ERR));
     setIdentity(KF.errorCovPost, Scalar::all(POST_ERR));
+    meas=Mat_<float>::zeros(2,1);
 }
 
 
 Point target::KalmanPredict(){
     prd=KF.predict();
-    return Point(prd.at<float>(1,1),prd.at<float>(2,1));
+    return Point(prd.at<float>(0,0),prd.at<float>(1,0));
 }
 
 Point target::Update_pos(int x,int y){
     meas.at<float>(0,0)=x;
-    meas.at<float>(0,0)=y;
+    meas.at<float>(1,0)=y;
     Mat state=KF.correct(meas);
     _Pos.x=state.at<float>(0,0);
     _Pos.y=state.at<float>(1,0);

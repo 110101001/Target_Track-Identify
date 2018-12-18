@@ -41,7 +41,10 @@ class target{
     public:
         vector<KeyPoint> _keypoints;
         Point _Pos;
+        Point _center;
 
+        Point trackWindow1;
+        Point trackWindow2;
     private:
         void KalmanInit(int x,int y);
 
@@ -55,6 +58,6 @@ class target{
 
 target *new_target(int x,int y);
 void pop_target();
-void target_track(vector<KeyPoint> kp,Mat desc,Mat img);
+void target_track(vector<KeyPoint> kp,Mat desc,Mat &img);
 
 #endif

@@ -50,8 +50,8 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
     int match_num =  matches.size();
     Mat po(match_num, 2, CV_32F);
     Mat ps(match_num, 2, CV_32F);
-    Mat good_po;
-    Mat good_ps;
+    //Mat good_po;
+    //Mat good_ps;
     Point2f pt;
     for (int i=0; i<match_num; i++) {
         pt = _keypoints[matches[i].queryIdx].pt;
@@ -62,8 +62,9 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
         ps.at<float>(i, 0) = pt.x;
         ps.at<float>(i, 1) = pt.y;
     }
-    vector<bool> RANSAC_mask;
-    findFundamentalMat(po, ps, RANSAC_mask, FM_RANSAC);    
+    Mat homo=findHomography(po,ps,RANSAC);
+    /*vector<bool> RANSAC_mask;
+    findFundamentalMat(po, ps, FM_RANSAC,3,0.99,RANSAC_mask);    
 
     for (int i=0; i<match_num; i++) {
         if(RANSAC_mask[i]!=0){
@@ -76,7 +77,6 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
                 good_ps.push_back(ps.row(i));
             }
         }
-    }
-    Mat homo=findHomography(po,ps);
+    }*/
     return homo;
 }

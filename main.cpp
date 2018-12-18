@@ -55,6 +55,7 @@ int main(int argc, char **argv){
     VideoCapture capture(0); // open the first camera
     cout << "Opening camera..." << endl;
     capture.set(CAP_PROP_FRAME_WIDTH,640);
+    cout << "Setting camera..." << endl;
     capture.set(CAP_PROP_FRAME_HEIGHT,480);
     if (!capture.isOpened())
     {
@@ -68,6 +69,7 @@ int main(int argc, char **argv){
     Save_background(frame);
     while(c!='q'){
         capture>>frame;
+        frame.copyTo(display);
         cvtColor(frame,gray_frame,COLOR_BGR2GRAY);
 
         if(c=='c')
@@ -78,8 +80,7 @@ int main(int argc, char **argv){
         //corner=find_corner(gray_frame,mask);
 
         feature_points=surf_detect(gray_frame,mask,desc,300);
-        target_track(feature_points,desc,frame);
-        drawKeypoints( frame, feature_points, display );
+        target_track(feature_points,desc,display);
         rectangle(display,select_start,select_end,Scalar(0,255,0),2);
         imshow("frame",display);
         c=waitKey(30);
