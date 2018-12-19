@@ -19,23 +19,25 @@ This Program use following methods:
 
 COMPILE:
 
-    To compile, you need a Cmake(vision 3.5.0 or higher), g++(vision 7 or higher) and OpenCV(4.0.0, including opencv contrib, more specifically, the xfeatures2d module)
+To compile, you need a Cmake(vision 3.5.0 or higher), g++(vision 7 or higher) and OpenCV(4.0.0, including opencv contrib, more specifically, the xfeatures2d module)
 
-    Create a directory for build:
+Create a directory for build:
 
-        mkdir build
+    mkdir build
 
-    Compile makefile:
+Compile makefile:
 
-        cd build
+    cd build
 
-        cmake <Project_dirctory>
+    cmake <Project_dirctory>
 
-    Compile:
+Compile:
 
-        make
+    make
 
 A executable file tracker should be generated.
+
+usage: ./tracker [NoDiff/Diff] (video path)
 
 Example(coin track with NoDiff):
 
