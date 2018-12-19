@@ -45,6 +45,7 @@ class target{
 
         Point trackWindow1;
         Point trackWindow2;
+        int target_size;
     private:
         void KalmanInit(int x,int y);
 
@@ -56,8 +57,9 @@ class target{
 };
 
 
-target *new_target(int x,int y);
+target *new_target(Point tw1,Point tw2);
 void pop_target();
+void del_target();
 void target_track(vector<KeyPoint> kp,Mat desc,Mat &img);
 
 #endif

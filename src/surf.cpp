@@ -4,7 +4,7 @@
 #
 # Create Time : 2018-12-17 14:24
 #
-# Last modified: 2018-12-18 09:49
+# Last modified: 2018-12-19 18:19
 #
 # Filename:	surf.cpp
 #
@@ -16,6 +16,7 @@
 #include"target.h"
 #include<iostream>
 
+
 using namespace cv;
 using namespace cv::xfeatures2d;
 
@@ -26,8 +27,25 @@ std::vector<KeyPoint> surf_detect(Mat src,Mat mask,Mat &desc,int hessian){
     return keypoints;
 }
 
-int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
+vector<KeyPoint> featuresInRange(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2,Mat &outDesc){
+    vector<KeyPoint> kp_ret;
     for(vector<KeyPoint>::iterator iter=keypoints.begin();iter!=keypoints.end();iter++){
+        if(IN_RANGE(iter->pt.x,p1.x,p2.x)&&IN_RANGE(iter->pt.y,p1.y,p2.y)){
+            kp_ret.push_back(*iter);
+            int row=distance(keypoints.begin(),iter);
+            if(outDesc.empty()){
+                outDesc=desc.row(row).clone();
+            }
+            else{
+                outDesc.push_back(desc.row(row));
+            }
+        }
+    }
+    return kp_ret;
+}
+
+int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
+    /*for(vector<KeyPoint>::iterator iter=keypoints.begin();iter!=keypoints.end();iter++){
         if(IN_RANGE(iter->pt.x,p1.x,p2.x)&&IN_RANGE(iter->pt.y,p1.y,p2.y)){
             _keypoints.push_back(*iter);
             int row=distance(keypoints.begin(),iter);
@@ -38,7 +56,8 @@ int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
                 _desc.push_back(desc.row(row));
             }
         }
-    }
+    }*/
+    _keypoints=featuresInRange(keypoints,desc,p1,p2,_desc);
     print();
     return _keypoints.size();
 }
@@ -46,7 +65,7 @@ int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
 Mat target::match(std::vector<KeyPoint> kp,Mat desc){
     Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create(DescriptorMatcher::BRUTEFORCE);
     std::vector< DMatch > matches;
-    matcher->match( _desc, desc, matches  );
+    matcher->match( _desc, desc, matches);
     int match_num =  matches.size();
     Mat po(match_num, 2, CV_32F);
     Mat ps(match_num, 2, CV_32F);

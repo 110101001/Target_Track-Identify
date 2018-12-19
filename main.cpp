@@ -39,8 +39,7 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
     else if((event==EVENT_LBUTTONUP)&&(pressed==1)){
         pressed=0;
         select_end=Point(x,y);
-        Point center=Point((select_start.x+select_end.x)/2,(select_start.y+select_end.y)/2);
-        target *nt=new_target(center.x,center.y);
+        target *nt=new_target(select_start,select_end);
         if(!(nt->setKeyPoint(feature_points,desc,select_start,select_end))) pop_target();
         select_end=Point(0,0);
         select_start=Point(0,0);
@@ -48,15 +47,15 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
 }
 
 int main(int argc, char **argv){
+    cout << "Opening camera..." << endl;
+    VideoCapture capture(0); // open the first camera
+    cout << "Setting camera..." << endl;
+    capture.set(CAP_PROP_FRAME_WIDTH,640);
+    capture.set(CAP_PROP_FRAME_HEIGHT,480);
     Mat frame,gray_frame;
     Mat mask,masked_frame;
     Mat corner;
     char c=0;
-    VideoCapture capture(0); // open the first camera
-    cout << "Opening camera..." << endl;
-    capture.set(CAP_PROP_FRAME_WIDTH,640);
-    cout << "Setting camera..." << endl;
-    capture.set(CAP_PROP_FRAME_HEIGHT,480);
     if (!capture.isOpened())
     {
         cerr << "ERROR: Can't initialize camera capture" << endl;
@@ -75,15 +74,17 @@ int main(int argc, char **argv){
         if(c=='c')
             Save_background(frame);
 
+        if(c=='d')
+            del_target();
         mask=Get_mask(frame);
-
+        //mask=Mat_<bool>::ones(480,640); 
         //corner=find_corner(gray_frame,mask);
 
         feature_points=surf_detect(gray_frame,mask,desc,300);
         target_track(feature_points,desc,display);
         rectangle(display,select_start,select_end,Scalar(0,255,0),2);
         imshow("frame",display);
-        c=waitKey(30);
+        c=waitKey(20);
     }
     return 0;
 }

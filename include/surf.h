@@ -21,5 +21,6 @@
 #include"opencv2/xfeatures2d.hpp"
 
 std::vector<KeyPoint> surf_detect(Mat src,Mat mask,Mat &desc,int hessian);
+vector<KeyPoint> featuresInRange(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2,Mat &outDesc);
 
 #endif
