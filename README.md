@@ -35,4 +35,10 @@ COMPILE:
 
         make
 
-    A executable file tracker should be generated.
+A executable file tracker should be generated.
+
+Example(coin track with NoDiff):
+
+![Image text](https://raw.githubusercontent.com/110101001/Target_Track-Identify/master/pictures/coins.png)
+
+Different color marks different coins, the white X is the prediction made by kalmanfilter.
