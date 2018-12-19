@@ -24,7 +24,7 @@
     Point( center.x - d, center.y + d ), color, 1, LINE_AA, 0 )
 
 #define DIS_LIMIT 1e+5
-#define WINDOW_SIZE 200
+#define WINDOW_SIZE 100
 
 vector<target> Targets;
 
@@ -117,7 +117,7 @@ void target_track(vector<KeyPoint> kp,Mat desc,Mat &img){
             //float distance= (iter->_Pos.x-prd.x)*(iter->_Pos.x-prd.x)+(iter->_Pos.y-prd.y)*(iter->_Pos.y-prd.y);
             //if(distance>DIS_LIMIT){}
             iter->_Pos=iter->Update_pos(iter->_Pos.x,iter->_Pos.y);
-            polylines(img,pt,npt,1,true,Scalar(0,0,0),1);
+            polylines(img,pt,npt,1,true,Scalar(255,255,255),1);
         }
             circle(img,iter->_Pos,10,colors[distance(Targets.begin(),iter)],2);
 

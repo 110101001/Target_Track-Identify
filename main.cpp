@@ -48,9 +48,17 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
 
 int main(int argc, char **argv){
     int mode=0;
+    VideoWriter writer;
     if(argc!=1){
         if(strcmp(argv[1],"NoDiff")){
-            mode=1;
+            mode|=0x1;
+        }
+        if(strcmp(argv[1],"Diff")){
+            mode|=0x0;
+        }
+        if(argc==3){
+            mode|=0x2;
+            writer=VideoWriter(argv[2], VideoWriter::fourcc('M', 'J', 'P', 'G'), 25, Size(640,480));
         }
     }
     cout << "Opening camera..." << endl;
@@ -82,9 +90,9 @@ int main(int argc, char **argv){
 
         if(c=='d')
             del_target();
-        if(mode==0)
+        if(~mode&0x1)
             mask=Get_mask(frame);
-        else if(mode==1)
+        else if(mode&0x1)
             mask=Mat_<bool>::ones(480,640); 
         //corner=find_corner(gray_frame,mask);
 
@@ -92,6 +100,9 @@ int main(int argc, char **argv){
         target_track(feature_points,desc,display);
         rectangle(display,select_start,select_end,Scalar(0,255,0),2);
         imshow("frame",display);
+        if(mode&0x2){
+            writer<<display;
+        }
         c=waitKey(20);
     }
     return 0;

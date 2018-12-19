@@ -49,7 +49,6 @@ Mat Get_mask(Mat present){
     dilate(mask,mask,ele);
     dilate(mask,mask,ele);
     erode(mask,mask,ele);
-    imshow("splt",mask);
 
     return ~mask;
 }

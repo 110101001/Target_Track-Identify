@@ -4,7 +4,7 @@
 #
 # Create Time : 2018-12-17 14:24
 #
-# Last modified: 2018-12-19 18:19
+# Last modified: 2018-12-19 19:59
 #
 # Filename:	surf.cpp
 #
@@ -81,7 +81,7 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
         ps.at<float>(i, 0) = pt.x;
         ps.at<float>(i, 1) = pt.y;
     }
-    Mat homo=findHomography(po,ps,RANSAC);
+    Mat homo=findHomography(po,ps,RANSAC,2);
     /*vector<bool> RANSAC_mask;
     findFundamentalMat(po, ps, FM_RANSAC,3,0.99,RANSAC_mask);    
 
