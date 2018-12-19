@@ -18,11 +18,6 @@
 
 #define ABS(x) ((x)>0?(x):-(x))
 
-#define drawCross( center, color, d )                                        \
-    line( img, Point( center.x - d, center.y - d ),                          \
-    Point( center.x + d, center.y + d ), color, 1, LINE_AA, 0); \
-    line( img, Point( center.x + d, center.y - d ),                          \
-    Point( center.x - d, center.y + d ), color, 1, LINE_AA, 0 )
 
 #define PROCESS_ERR 1e-5
 #define MEAS_ERR 1e-3

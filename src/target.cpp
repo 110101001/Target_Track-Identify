@@ -17,6 +17,12 @@
 
 #define ABS(x) ((x)>0?(x):-(x))
 
+#define drawCross( center, color, d )                                        \
+    line( img, Point( center.x - d, center.y - d ),                          \
+    Point( center.x + d, center.y + d ), color, 1, LINE_AA, 0); \
+    line( img, Point( center.x + d, center.y - d ),                          \
+    Point( center.x - d, center.y + d ), color, 1, LINE_AA, 0 )
+
 #define DIS_LIMIT 1e+5
 #define WINDOW_SIZE 200
 
@@ -87,7 +93,7 @@ void target_track(vector<KeyPoint> kp,Mat desc,Mat &img){
         Mat tmp_desc;
         vector<KeyPoint> tmp_kp;
         Point prd=iter->KalmanPredict();
-        circle(img,prd,10,Scalar(255,0,0),2);
+        drawCross(prd,Scalar(255,255,255),5);
         std::vector< DMatch > matches;
         tmp_kp=featuresInRange(kp,desc,
                 Point(prd.x+iter->target_size+WINDOW_SIZE,prd.y+iter->target_size+WINDOW_SIZE),
@@ -97,7 +103,6 @@ void target_track(vector<KeyPoint> kp,Mat desc,Mat &img){
         Mat homo=iter->match(tmp_kp,tmp_desc);
         if(homo.empty()){
             iter->_Pos=prd;
-            circle(img,iter->_Pos,10,Scalar(255,255,0),2);
         }
         else{
             Point tw[4];
@@ -112,8 +117,9 @@ void target_track(vector<KeyPoint> kp,Mat desc,Mat &img){
             //float distance= (iter->_Pos.x-prd.x)*(iter->_Pos.x-prd.x)+(iter->_Pos.y-prd.y)*(iter->_Pos.y-prd.y);
             //if(distance>DIS_LIMIT){}
             iter->_Pos=iter->Update_pos(iter->_Pos.x,iter->_Pos.y);
-            polylines(img,pt,npt,1,true,colors[distance(Targets.begin(),iter)]);
+            polylines(img,pt,npt,1,true,Scalar(0,0,0),1);
         }
+            circle(img,iter->_Pos,10,colors[distance(Targets.begin(),iter)],2);
 
         //iter->print();
     }

@@ -47,6 +47,12 @@ void Mouse_handler(int event,int x,int y,int flags,void *ustc){
 }
 
 int main(int argc, char **argv){
+    int mode=0;
+    if(argc!=1){
+        if(strcmp(argv[1],"NoDiff")){
+            mode=1;
+        }
+    }
     cout << "Opening camera..." << endl;
     VideoCapture capture(0); // open the first camera
     cout << "Setting camera..." << endl;
@@ -76,8 +82,10 @@ int main(int argc, char **argv){
 
         if(c=='d')
             del_target();
-        mask=Get_mask(frame);
-        //mask=Mat_<bool>::ones(480,640); 
+        if(mode==0)
+            mask=Get_mask(frame);
+        else if(mode==1)
+            mask=Mat_<bool>::ones(480,640); 
         //corner=find_corner(gray_frame,mask);
 
         feature_points=surf_detect(gray_frame,mask,desc,300);

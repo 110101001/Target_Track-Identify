@@ -1,9 +1,7 @@
 # Target_Track-identify
 
 
-
-Warning: Unfinished!
-
+Finished, but waiting to be improved.
 
 
 This program's function is mult-target track&identify. It's a course design of Computer Vision.
@@ -16,8 +14,7 @@ This Program use following methods:
 
     KalmanFilter
 
-    Background differentiation
-
+    Background differentiation(For fast performance, Run with parameter "NoDiff" to disable it)
 
 
 COMPILE:
@@ -32,7 +29,7 @@ COMPILE:
 
         cd build
 
-        cmake ..
+        cmake <Project_dirctory>
 
     Compile:
 
