@@ -96,7 +96,7 @@ int main(int argc, char **argv){
             mask=Mat_<bool>::ones(480,640); 
         //corner=find_corner(gray_frame,mask);
 
-        feature_points=surf_detect(gray_frame,mask,desc,300);
+        feature_points=surf_detect(gray_frame,mask,desc,600);
         target_track(feature_points,desc,display);
         rectangle(display,select_start,select_end,Scalar(0,255,0),2);
         imshow("frame",display);

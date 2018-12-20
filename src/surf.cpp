@@ -63,8 +63,10 @@ int target::setKeyPoint(vector<KeyPoint> keypoints,Mat desc,Point p1,Point p2){
 }
 
 Mat target::match(std::vector<KeyPoint> kp,Mat desc){
+    Mat homo;
     Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create(DescriptorMatcher::BRUTEFORCE);
     std::vector< DMatch > matches;
+    if(desc.empty()) return homo;
     matcher->match( _desc, desc, matches);
     int match_num =  matches.size();
     Mat po(match_num, 2, CV_32F);
@@ -81,7 +83,7 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
         ps.at<float>(i, 0) = pt.x;
         ps.at<float>(i, 1) = pt.y;
     }
-    Mat homo=findHomography(po,ps,RANSAC,2);
+    homo=findHomography(po,ps,RANSAC,2);
     /*vector<bool> RANSAC_mask;
     findFundamentalMat(po, ps, FM_RANSAC,3,0.99,RANSAC_mask);    
 
@@ -99,3 +101,4 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
     }*/
     return homo;
 }
+
