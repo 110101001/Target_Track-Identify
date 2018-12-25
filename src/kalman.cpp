@@ -20,8 +20,8 @@
 
 
 #define PROCESS_ERR 1e-5
-#define MEAS_ERR 1e-3
-#define POST_ERR 1e-5 
+#define MEAS_ERR 1e-5
+#define POST_ERR 1e-4 
 
 using namespace cv;
 
