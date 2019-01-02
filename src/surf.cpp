@@ -83,7 +83,7 @@ Mat target::match(std::vector<KeyPoint> kp,Mat desc){
         ps.at<float>(i, 0) = pt.x;
         ps.at<float>(i, 1) = pt.y;
     }
-    homo=findHomography(po,ps,RANSAC,2);
+    homo=findHomography(po,ps,RANSAC,3);
     /*vector<bool> RANSAC_mask;
     findFundamentalMat(po, ps, FM_RANSAC,3,0.99,RANSAC_mask);    
 

@@ -24,7 +24,7 @@
     Point( center.x - d, center.y + d ), color, 1, LINE_AA, 0 )
 
 #define DIS_LIMIT 1e+5
-#define WINDOW_SIZE 100
+#define WINDOW_SIZE 1.5
 
 vector<target> Targets;
 
@@ -96,10 +96,14 @@ void target_track(vector<KeyPoint> kp,Mat desc,Mat &img){
         drawCross(prd,Scalar(255,255,255),5);
         std::vector< DMatch > matches;
         tmp_kp=featuresInRange(kp,desc,
-                Point(prd.x+iter->target_size+WINDOW_SIZE,prd.y+iter->target_size+WINDOW_SIZE),
-                Point(prd.x-iter->target_size-WINDOW_SIZE,prd.y-iter->target_size-WINDOW_SIZE),
+                Point(prd.x+iter->target_size*WINDOW_SIZE,prd.y+iter->target_size*WINDOW_SIZE),
+                Point(prd.x-iter->target_size*WINDOW_SIZE,prd.y-iter->target_size*WINDOW_SIZE),
                 tmp_desc);
-        
+         
+       /* rectangle(img,
+                Point(prd.x+iter->target_size*WINDOW_SIZE,prd.y+iter->target_size*WINDOW_SIZE),
+                Point(prd.x-iter->target_size*WINDOW_SIZE,prd.y-iter->target_size*WINDOW_SIZE),
+                Scalar(255,255,255),2);*/
         Mat homo=iter->match(tmp_kp,tmp_desc);
         if(homo.empty()){
             iter->_Pos=prd;
